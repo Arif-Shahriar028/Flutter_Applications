@@ -14,29 +14,22 @@ void main(){
   );
 }
 
-Widget getListView(){
-  var listView = ListView(
-    children: <Widget>[
-      ListTile(
-        leading: Icon(Icons.landscape),
-        title: Text("Landscape"),
-        subtitle: Text("Beautiful view"),
-        trailing: Icon(Icons.wb_sunny),
-      ),
-      ListTile(
-        leading: Icon(Icons.landscape),
-        title: Text("Landscape"),
-        subtitle: Text("Beautiful view"),
-        trailing: Icon(Icons.wb_sunny),
-      ),
-      ListTile(
-        leading: Icon(Icons.landscape),
-        title: Text("Landscape"),
-        subtitle: Text("Beautiful view"),
-        trailing: Icon(Icons.wb_sunny),
-      ),
-    ],
-  );
+List<String> getListElements(){
+  var items = List<String>.generate(1000, (counter) => "Item $counter");
+  return items;
+}
 
+Widget getListView(){
+  var listItems = getListElements();
+  var listView = ListView.builder(
+    itemBuilder: (context, index){
+      return ListTile(
+        title: Text(listItems[index]),
+        onTap: (){
+          debugPrint("${listItems[index]} no item selected");
+        },
+      );
+    }
+  );
   return listView;
 }
