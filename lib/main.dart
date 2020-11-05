@@ -1,57 +1,50 @@
 import 'package:flutter/material.dart';
-import './app_screens/first_screen.dart';
 
 void main(){
   runApp(
     MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "First App",
-      home: Scaffold(
-        appBar: AppBar(title: Text("My First App"),),
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            debugPrint("Button Clicked");
-          },
-          child: Icon(Icons.add),
-          tooltip: 'Add one more item',
-        ),
-        body: getListView()
-      ),
-    )
-  );
-}
-
-void showSnackBar(BuildContext context, String item)
-{
-  var snackBar = SnackBar(
-    content: Text("You just tapped $item"),
-    action: SnackBarAction(
-      label: "Undo",
-      onPressed: (){
-        debugPrint("Undo option clicked");
-      },
+      title: "StateFulWidget",
+      home: FavouriteCity(),
     ),
   );
-
-  Scaffold.of(context).showSnackBar(snackBar);
 }
 
-List<String> getListElements(){
-  var items = List<String>.generate(1000, (counter) => "Item $counter");
-  return items;
+class FavouriteCity extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return _FavouriteCityState();
+  }
 }
 
-Widget getListView(){
-  var listItems = getListElements();
-  var listView = ListView.builder(
-    itemBuilder: (context, index){
-      return ListTile(
-        title: Text(listItems[index]),
-        onTap: (){
-          showSnackBar(context, listItems[index]);
-        },
-      );
-    }
-  );
-  return listView;
+class _FavouriteCityState extends State<FavouriteCity>{
+  String nameCity = "";
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("StateFull App example"),
+      ),
+      body: Container(
+        margin: EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            TextField(
+              onChanged: (String userInput){  // here onSubmitted event handler can be used
+                setState(() {
+                  nameCity = userInput;
+                });
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.all(30.0),
+              child: Text(
+                "your best city is $nameCity",
+                style: TextStyle(fontSize: 20.0),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 }
