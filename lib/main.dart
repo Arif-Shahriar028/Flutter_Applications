@@ -8,10 +8,32 @@ void main(){
       title: "First App",
       home: Scaffold(
         appBar: AppBar(title: Text("My First App"),),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            debugPrint("Button Clicked");
+          },
+          child: Icon(Icons.add),
+          tooltip: 'Add one more item',
+        ),
         body: getListView()
       ),
     )
   );
+}
+
+void showSnackBar(BuildContext context, String item)
+{
+  var snackBar = SnackBar(
+    content: Text("You just tapped $item"),
+    action: SnackBarAction(
+      label: "Undo",
+      onPressed: (){
+        debugPrint("Undo option clicked");
+      },
+    ),
+  );
+
+  Scaffold.of(context).showSnackBar(snackBar);
 }
 
 List<String> getListElements(){
@@ -26,7 +48,7 @@ Widget getListView(){
       return ListTile(
         title: Text(listItems[index]),
         onTap: (){
-          debugPrint("${listItems[index]} no item selected");
+          showSnackBar(context, listItems[index]);
         },
       );
     }
